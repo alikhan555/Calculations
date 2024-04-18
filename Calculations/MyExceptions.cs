@@ -12,7 +12,7 @@ namespace Calculations
         {
             if (string.IsNullOrEmpty(arg1))
             {
-                throw new Exception("hello");
+                throw new ArgumentException("hello");
             }
         }
     }
