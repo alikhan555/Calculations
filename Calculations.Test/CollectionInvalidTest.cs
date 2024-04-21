@@ -1,35 +1,16 @@
-﻿using Xunit;
+﻿using Calculations.Test.Fixtures;
+using Xunit;
 
 namespace Calculations.Test
 {
-    public class CollectionFixture
-    {
-        public Collections CollectionsInstance = new Collections();
-    }
-
-    public class CollectionTest : IClassFixture<CollectionFixture>
+    [Collection("Collection")]
+    public class CollectionInvalidTest
     {
         private CollectionFixture _collectionFixture;
 
-        public CollectionTest(CollectionFixture collectionFixture)
+        public CollectionInvalidTest(CollectionFixture collectionFixture)
         {
             _collectionFixture = collectionFixture;
-        }
-
-        [Fact]
-        [Trait("Categories", "Fibo")]
-        public void Fibonacci_NotHaveZero()
-        {
-            Collections collections = _collectionFixture.CollectionsInstance;
-            Assert.All(collections.Fibonacci, x => Assert.NotEqual(0, x));
-        }
-
-        [Fact]
-        [Trait("Categories", "Fibo")]
-        public void Fibonacci_MustHave5()
-        {
-            Collections collections = _collectionFixture.CollectionsInstance;
-            Assert.Contains(5, collections.Fibonacci);
         }
 
         [Fact]
