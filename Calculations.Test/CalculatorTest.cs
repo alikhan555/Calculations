@@ -21,5 +21,23 @@ namespace Calculations.Test
 
             Assert.Equal(6, result, 0);
         }
+
+        [Theory]
+        [InlineData(1, false)]
+        [InlineData(2, true)]
+        [InlineData(3, false)]
+        [InlineData(4, true)]
+        [InlineData(5, false)]
+        [InlineData(6, true)]
+        [InlineData(7, false)]
+        [InlineData(8, true)]
+        [InlineData(9, false)]
+        [InlineData(10, true)]
+        public void IsEven_TestOddAndEven(int n, bool expected)
+        {
+            Calculator calculator = new Calculator();
+            bool result = calculator.IsEven(n);
+            Assert.Equal(expected, result);
+        }
     }
 }

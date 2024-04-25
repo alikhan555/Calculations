@@ -17,6 +17,8 @@ namespace Calculations.Test
         [Trait("Categories", "Fibo")]
         public void Fibonacci_NotHaveZero()
         {
+            Thread.Sleep(3000);
+
             Collections collections = _collectionFixture.CollectionsInstance;
             Assert.All(collections.Fibonacci, x => Assert.NotEqual(0, x));
         }
@@ -25,6 +27,8 @@ namespace Calculations.Test
         [Trait("Categories", "Fibo")]
         public void Fibonacci_MustHave5()
         {
+            Thread.Sleep(3000);
+
             Collections collections = _collectionFixture.CollectionsInstance;
             Assert.Contains(5, collections.Fibonacci);
         }

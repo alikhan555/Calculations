@@ -4,6 +4,13 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+
+	  <AssemblyTitle>YourLibraryTitle</AssemblyTitle>
+	  <AssemblyDescription>YourLibraryDescription</AssemblyDescription>
+	  <AssemblyCompany>YourCompany</AssemblyCompany>
+	  <AssemblyProduct>YourProduct</AssemblyProduct>
+	  <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,7 +26,16 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
+		<AssemblyAttribute Include="Xunit.CollectionBehaviorAttribute">
+			<Arguments>DisableTestParallelization</Arguments>
+		</AssemblyAttribute>
+		<AssemblyAttribute Include="Xunit.TestCollectionOrdererAttribute">
+			<Arguments>Calculations.Test.CollectionOrderer.TestCollectionOrderer, Calculations.Test</Arguments>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
     <ProjectReference Include="..\Calculations\Calculations.csproj" />
   </ItemGroup>
 
