@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Calculations\Calculations.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="DataShare\" />
+	</ItemGroup>
+
 </Project>

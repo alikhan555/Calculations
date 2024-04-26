@@ -39,5 +39,14 @@ namespace Calculations.Test
             bool result = calculator.IsEven(n);
             Assert.Equal(expected, result);
         }
+
+        [Theory]
+        [MemberData(nameof(CalculationDataShare.IsEvenData), MemberType = typeof(CalculationDataShare))]
+        public void IsEven_TestOddAndEven_With(int n, bool expected)
+        {
+            Calculator calculator = new Calculator();
+            bool result = calculator.IsEven(n);
+            Assert.Equal(expected, result);
+        }
     }
 }
