@@ -29,5 +29,34 @@ namespace Calculations.Test
                 return data;
             }
         }
+
+
+        public static IEnumerable<object[]> IsEvenTestDataModels
+        {
+            get
+            {
+                List<object[]> data = new List<object[]>
+                {
+                    new object[] { new IsEvenTestDataModel() {Input = 1, Result = false} },
+                    new object[] { new IsEvenTestDataModel() {Input = 2, Result = true} },
+                    new object[] { new IsEvenTestDataModel() {Input = 3, Result = false } },
+                    new object[] { new IsEvenTestDataModel() {Input = 4, Result = true} },
+                    new object[] { new IsEvenTestDataModel() {Input = 5, Result = false } },
+                    new object[] { new IsEvenTestDataModel() {Input = 6, Result = true} },
+                    new object[] { new IsEvenTestDataModel() {Input = 7, Result = false } },
+                    new object[] { new IsEvenTestDataModel() {Input = 8, Result = true} },
+                    new object[] { new IsEvenTestDataModel() {Input = 9, Result = false} },
+                    new object[] { new IsEvenTestDataModel() {Input = 10, Result = true} },
+                };
+
+                return data;
+            }
+        }
+    }
+
+    public class IsEvenTestDataModel
+    {
+        public int Input { get; set; }
+        public bool Result { get; set; }
     }
 }
