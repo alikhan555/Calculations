@@ -1,4 +1,6 @@
-﻿using Xunit;
+﻿using Calculations.Test.DataShare;
+using Calculations.Test.DataShare.DataAttributes;
+using Xunit;
 
 namespace Calculations.Test
 {
@@ -52,6 +54,15 @@ namespace Calculations.Test
         [Theory]
         [MemberData(nameof(CalculationDataShare.IsEvenTestDataModels), MemberType = typeof(CalculationDataShare))]
         public void IsEven_TestOddAndEven_WithMemberDataModel(IsEvenTestDataModel dataModels)
+        {
+            Calculator calculator = new Calculator();
+            bool result = calculator.IsEven(dataModels.Input);
+            Assert.Equal(dataModels.Result, result);
+        }
+
+        [Theory]
+        [IsEvenData]
+        public void IsEven_TestOddAndEven_WithDataAttribute(IsEvenTestDataModel dataModels)
         {
             Calculator calculator = new Calculator();
             bool result = calculator.IsEven(dataModels.Input);

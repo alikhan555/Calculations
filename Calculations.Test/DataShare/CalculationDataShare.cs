@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Calculations.Test
+﻿namespace Calculations.Test.DataShare
 {
     public class CalculationDataShare
     {
@@ -52,11 +46,5 @@ namespace Calculations.Test
                 return data;
             }
         }
-    }
-
-    public class IsEvenTestDataModel
-    {
-        public int Input { get; set; }
-        public bool Result { get; set; }
     }
 }
