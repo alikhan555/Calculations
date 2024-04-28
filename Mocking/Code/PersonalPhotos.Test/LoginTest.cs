@@ -3,33 +3,51 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using PersonalPhotos.Controllers;
+using PersonalPhotos.Models;
 
 namespace PersonalPhotos.Test
 {
     public class LoginTest
     {
-        private readonly LoginsController _controller;
-        private readonly Mock<ILogins> _login;
-        private readonly Mock<IHttpContextAccessor> _httpContextAccessor;
-
-        public LoginTest()
-        {
-            _login = new Mock<ILogins>();
-
-            Mock<ISession> session = new Mock<ISession>();
-            Mock<HttpContext> httpContext = new Mock<HttpContext>();
-            httpContext.Setup(x => x.Session).Returns(session.Object);
-            _httpContextAccessor = new Mock<IHttpContextAccessor>();
-            _httpContextAccessor.Setup(x => x.HttpContext).Returns(httpContext.Object);
-
-            _controller = new LoginsController(_login.Object, _httpContextAccessor.Object);
-        }
-
         [Fact]
         public void Index_GivenOrReturnUrl_ReturnLoginView()
         {
-            var result = _controller.Index() as ViewResult;
+            // Arrange
+            ILogins logins = Mock.Of<ILogins>();
 
+            ISession session = Mock.Of<ISession>();
+            HttpContext httpContext = Mock.Of<HttpContext>(x => x.Session == session);
+            IHttpContextAccessor httpContextAccessor = Mock.Of<IHttpContextAccessor>(x => x.HttpContext == httpContext);
+
+            LoginsController loginsController = new LoginsController(logins, httpContextAccessor);
+
+            // Act
+            var result = loginsController.Index() as ViewResult;
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("Login", result.ViewName);
+        }
+
+        [Fact]
+        public async void Login_GivenModelStateInvalid_ReturnLoginView()
+        {
+            // Arrange
+            ILogins logins = Mock.Of<ILogins>();
+
+            ISession session = Mock.Of<ISession>();
+            HttpContext httpContext = Mock.Of<HttpContext>(x => x.Session == session);
+            IHttpContextAccessor httpContextAccessor = Mock.Of<IHttpContextAccessor>(x => x.HttpContext == httpContext);
+
+            LoginsController loginsController = new LoginsController(logins, httpContextAccessor);
+            loginsController.ModelState.AddModelError("Test", "Test");
+
+            LoginViewModel loginViewModel = Mock.Of<LoginViewModel>();
+            
+            // Act
+            var result = await loginsController.Login(loginViewModel) as ViewResult;
+
+            // Assert
             Assert.NotNull(result);
             Assert.Equal("Login", result.ViewName);
         }
