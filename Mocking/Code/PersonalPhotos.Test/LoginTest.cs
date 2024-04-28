@@ -1,4 +1,5 @@
 using Core.Interfaces;
+using Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -48,26 +49,53 @@ namespace PersonalPhotos.Test
             Assert.Equal("Login", result.ViewName);
         }
 
-        //[Fact]
-        //public async void Login_GivenModelStateInvalid_ReturnLoginView()
-        //{
-        //    // Arrange
-        //    ILogins logins = Mock.Of<ILogins>();
+        [Fact]
+        public async void Login_GivenCorrectCredentials_RedirectToDisplayAction()
+        {
+            // Arrange
+            ISession session = Mock.Of<ISession>();
+            HttpContext httpContext = Mock.Of<HttpContext>(x => x.Session == session);
+            IHttpContextAccessor httpContextAccessor = Mock.Of<IHttpContextAccessor>(x => x.HttpContext == httpContext);
 
-        //    ISession session = Mock.Of<ISession>();
-        //    HttpContext httpContext = Mock.Of<HttpContext>(x => x.Session == session);
-        //    IHttpContextAccessor httpContextAccessor = Mock.Of<IHttpContextAccessor>(x => x.HttpContext == httpContext);
+            LoginViewModel loginViewModel = Mock.Of<LoginViewModel>(x => x.Email == "test@testing.com" && x.Password == "123");
+            User user = new() { Email = "test@testing.com", Password = "123" };
 
-        //    LoginsController loginsController = new LoginsController(logins, httpContextAccessor);
+            Mock<ILogins> logins = new Mock<ILogins>();
+            logins.Setup(x => x.GetUser(It.IsAny<string>())).ReturnsAsync(user);
+            
+            LoginsController loginsController = new LoginsController(logins.Object, httpContextAccessor);
 
-        //    LoginViewModel loginViewModel = Mock.Of<LoginViewModel>();
+            // Act
+            var result = await loginsController.Login(loginViewModel) as RedirectToActionResult;
 
-        //    // Act
-        //    var result = await loginsController.Login(loginViewModel) as ViewResult;
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("Photos", result.ControllerName);
+            Assert.Equal("Display", result.ActionName);
+        }
 
-        //    // Assert
-        //    Assert.NotNull(result);
-        //    Assert.Equal("Login", result.ViewName);
-        //}
+        [Fact]
+        public async void Login_GivenInvalidCredentials_RedirectToDisplayAction()
+        {
+            // Arrange
+            ISession session = Mock.Of<ISession>();
+            HttpContext httpContext = Mock.Of<HttpContext>(x => x.Session == session);
+            IHttpContextAccessor httpContextAccessor = Mock.Of<IHttpContextAccessor>(x => x.HttpContext == httpContext);
+
+            LoginViewModel loginViewModel = Mock.Of<LoginViewModel>(x => x.Email == "test@testing.com" && x.Password == "123");
+            User user = new() { Email = "test@testing.com", Password = "1234" };
+
+            Mock<ILogins> logins = new Mock<ILogins>();
+            logins.Setup(x => x.GetUser(It.IsAny<string>())).ReturnsAsync(user);
+
+            LoginsController loginsController = new LoginsController(logins.Object, httpContextAccessor);
+
+            // Act
+            var result = await loginsController.Login(loginViewModel) as ViewResult;
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("Login", result.ViewName);
+        }
     }
 }
