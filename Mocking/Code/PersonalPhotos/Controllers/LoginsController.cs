@@ -8,6 +8,7 @@ namespace PersonalPhotos.Controllers;
 
 public class LoginsController : Controller
 {
+    private readonly LoginsController _login;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ILogins _loginService;
 
